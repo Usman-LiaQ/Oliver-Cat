@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="neon-boost">
+
+  <!-- Simple Dark Preloader -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <span class="loader-text">Welcome back, loading your workspace...</span>
+    </div>
+  </div>
+
+  <!-- Top Fixed Navigation Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <img class="user-avatar" src="cat.jpg" alt="Profile" onerror="this.src='https://placehold.co/40x40/1f2937/00d4ff?text=User'">
+      <div class="user-info-head">
+        <span class="user-name">Oliver Cat</span>
+        <span class="user-status-dot" title="Online"></span>
+      </div>
+    </div>
+    
+    <div class="header-search">
+      <input type="text" id="global-search" placeholder="Search posts, channels, users..." />
+    </div>
+
+    <div class="header-right">
+      <button class="btn btn-primary" id="open-post-modal">+ Create Post</button>
+      <button class="btn btn-admin" id="open-admin-modal">⚙️ Admin Panel</button>
+      <button class="btn btn-secondary" id="open-messages-modal">💬 Messages <span class="badge badge-mini" id="msg-count">2</span></button>
+    </div>
+  </header>
+
+  <!-- Dual Sidebars -->
+  <aside class="sidebar-primary">
+    <div class="icon-avatar-wrapper active" data-server="General" title="General Server">
+      <img class="sidebar-avatar" src="cat.jpg" alt="Server 1" onerror="this.src='https://placehold.co/46x46/1f2937/00d4ff?text=S1'">
+    </div>
+    <div class="icon-avatar-wrapper" data-server="Dev-Hub" title="Dev-Hub Server">
+      <img class="sidebar-avatar" src="cat2.jpg" alt="Server 2" onerror="this.src='https://placehold.co/46x46/1f2937/ff0080?text=S2'">
+    </div>
+    <div class="icon-avatar-wrapper" data-server="Gaming" title="Gaming Server">
+      <img class="sidebar-avatar" src="dog.jpg" alt="Server 3" onerror="this.src='https://placehold.co/46x46/1f2937/7928ca?text=S3'">
+    </div>
+  </aside>
+
+  <aside class="sidebar-secondary">
+    <div class="channel-header">
+      <span class="channel-title">CHANNELS</span>
+      <span class="add-channel-btn" id="add-channel-trigger" title="Add Channel">+</span>
+    </div>
+    <div class="channel-list" id="channel-list">
+      <div class="channel-item active" data-channel="all"># all-activity</div>
+      <div class="channel-item" data-channel="new-videos"># new-videos</div>
+      <div class="channel-item" data-channel="updates"># updates</div>
+      <div class="channel-item" data-channel="faq"># faq</div>
+    </div>
+  </aside>
+
+  <!-- Main Feed Area -->
+  <main class="main-content">
+
+    <!-- Navigation Pills Filter -->
+    <nav class="nav-pills-container">
+      <div class="pill-item active" data-filter="all">
+        <span>All Posts</span>
+        <span class="badge" id="total-posts-badge">0</span>
+      </div>
+      <div class="pill-item" data-filter="video">
+        <span>Videos</span>
+        <span class="badge" id="video-posts-badge">0</span>
+      </div>
+      <div class="pill-item" data-filter="bookmarked">
+        <span>Bookmarked</span>
+        <span class="badge" id="bookmarked-count">0</span>
+      </div>
+    </nav>
+
+    <!-- Dynamic Post Feed Container -->
+    <div id="posts-feed-container"></div>
+
+    <!-- Email Inbox Section -->
+    <section class="inbox-section">
+      <div class="section-title-row">
+        <h3 class="inbox-label">SYSTEM INBOX (<span id="inbox-count">2</span>)</h3>
+        <button class="btn-text" id="clear-inbox-btn">Clear All</button>
+      </div>
+
+      <div class="inbox-list" id="inbox-list">
+        <div class="email-item">
+          <img class="email-avatar" src="cat.jpg" alt="Sender" onerror="this.src='https://placehold.co/40x40/1f2937/00d4ff?text=Email'">
+          <div class="email-body">
+            <div class="email-header">
+              <span class="sender-name">DevOps Alerts</span>
+              <span class="send-time">4:58 PM</span>
+            </div>
+            <div class="email-subject">Deployment Successful</div>
+            <div class="email-snippet">Your application update is live and running smoothly...</div>
+          </div>
+          <button class="delete-email-btn" title="Delete">&times;</button>
+        </div>
+
+        <div class="email-item">
+          <img class="email-avatar" src="dog.jpg" alt="Sender" onerror="this.src='https://placehold.co/40x40/1f2937/00d4ff?text=Email'">
+          <div class="email-body">
+            <div class="email-header">
+              <span class="sender-name">Community Newsletter</span>
+              <span class="send-time">12:32 PM</span>
+            </div>
+            <div class="email-subject">Top Articles of the Week</div>
+            <div class="email-snippet">Check out the top trending posts on modern UI design...</div>
+          </div>
+          <button class="delete-email-btn" title="Delete">&times;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Suggested Developers -->
+    <section class="users-section">
+      <h3 class="inbox-label">SUGGESTED DEVS</h3>
+      <div id="suggested-users-container"></div>
+    </section>
+
+    <!-- Product Card -->
+    <section class="product-card">
+      <div class="product-media">
+        <img class="product-image" src="shirt.jpg" alt="Product" onerror="this.src='https://placehold.co/600x220/121826/00d4ff?text=Developer+Merch+Store'">
+        <div class="discount-badge">20% OFF</div>
+        <div class="product-hover-overlay">
+          <button class="btn btn-cart" id="add-cart-btn">Add to Cart (<span id="cart-count">0</span>)</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Right Sidebar - System Stats -->
+  <aside class="sidebar-right">
+    <div class="sidebar-right-header">SYSTEM MONITOR</div>
+    <div class="stat-box">
+      <span class="stat-label">RAM Usage</span>
+      <div class="progress-bar"><div class="progress-fill" id="ram-fill" style="width: 58%;"></div></div>
+      <span class="stat-value" id="ram-value" style="font-size: 11px; margin-top: 4px; display: block;">58%</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-label">Network Latency</span>
+      <span class="stat-value text-cyan" id="ping-value">22ms</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-label">Active Server</span>
+      <span class="stat-value text-cyan" id="active-server-name">General</span>
+    </div>
+  </aside>
+
+  <!-- Floating Video Widget -->
+  <div class="floating-video-widget" id="floating-widget">
+    <button class="widget-close-btn" id="close-widget-btn">&times;</button>
+    <div class="widget-content">
+      <span class="widget-tag">NOW PLAYING</span>
+      <p class="widget-title">Stream: Web Architecture 2026</p>
+    </div>
+    <div class="video-timer-badge" id="widget-timer">00:45</div>
+  </div>
+
+  <!-- Create Post Modal -->
+  <div class="modal-overlay" id="post-modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-icon" id="close-post-modal">&times;</button>
+      <h2 class="modal-title">Create New Post</h2>
+      <form id="create-post-form">
+        <div class="form-group">
+          <label for="post-text-input">Post Content</label>
+          <textarea id="post-text-input" placeholder="What's on your mind?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="post-channel-select">Category Channel</label>
+          <select id="post-channel-select">
+            <option value="updates">updates</option>
+            <option value="new-videos">new-videos</option>
+            <option value="faq">faq</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="post-type-select">Post Type</label>
+          <select id="post-type-select">
+            <option value="text">Text Post</option>
+            <option value="video">Video Post</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-post-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Control Panel Modal -->
+  <div class="modal-overlay" id="admin-modal-overlay">
+    <div class="modal-box modal-lg">
+      <button class="modal-close-icon" id="close-admin-modal">&times;</button>
+      <h2 class="modal-title">⚙️ Admin Panel</h2>
+      <p class="modal-description">Manage state and dashboard toggles.</p>
+
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h4>System Status</h4>
+          <div class="toggle-row">
+            <span>Maintenance Mode</span>
+            <input type="checkbox" id="toggle-maintenance">
+          </div>
+          <div class="toggle-row">
+            <span>Dark Neon Boost</span>
+            <input type="checkbox" id="toggle-neon" checked>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h4>Data Controls</h4>
+          <button class="btn btn-secondary btn-full" id="reset-storage-btn">Reset Storage</button>
+          <button class="btn btn-primary btn-full" style="margin-top: 8px;" id="seed-data-btn">Inject Sample Post</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="save-admin-btn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages Modal -->
+  <div class="modal-overlay" id="messages-modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-icon" id="close-messages-modal">&times;</button>
+      <h2 class="modal-title">Direct Messages</h2>
+      <div class="chat-preview-list">
+        <div class="chat-item">
+          <img src="cat2.jpg" alt="Mimi" onerror="this.src='https://placehold.co/36x36/1f2937/ff0080?text=M'">
+          <div>
+            <strong>Mimi</strong>
+            <p>Did you check the new CSS updates?</p>
+          </div>
+        </div>
+        <div class="chat-item">
+          <img src="dog.jpg" alt="Rex" onerror="this.src='https://placehold.co/36x36/1f2937/00d4ff?text=R'">
+          <div>
+            <strong>Rex</strong>
+            <p>The backend API is running great!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
